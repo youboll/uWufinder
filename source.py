@@ -1,35 +1,85 @@
 import requests
 import json
-class anime:
+import os
+from PIL import Image
+import PIL
+import math
+class anime():
 
-	def search(self,file):
-		files = {'image': open('anime.jpg','rb')}
+	def search(self,file,name="Default",tipo="write"):
+		files = {'image': open(str(file),'rb')}
 		r = requests.post('https://trace.moe/api/search', files = files)
 		j = json.dumps(r.json())
-		exit = open('exit.json','w')
-		exit.write(str(j))
+		string = str(name) + '.json'
+		if (tipo =="write"):
+			exit = open(string,'w')
+			exit.write(str(j))
 		self.response = j
 		return(j)
-	def break_video(file):
-		pass	
-	def list(self):
-		response = self.response
-		response = json.loads(response)
-		res = response["docs"]
-		self.alpha = res[0]
-		self.beta = res[1]
-		self.teta = res[2]
-		self.gama = res[3]
+
 		#print(type(alpha))
 		#print("Nome: ",alpha["title_romaji"]," Semelhanca",alpha["similarity"])
-	def finder(self):
-		if (self.alpha < 0.8):
-			print("Anime Nao encontrado")
-		else:
-			print("Nome: ",self.alpha["title_romaji"]," Semelhanca",self.alpha["similarity"])
-bc = anime()
-request = bc.search('anime.jpg')
-bc.list()
-bc.finder()
+	def composer(self,resp):
+		anime_exit = {'title':[],'ep':[],'mal_id':[],'is_adult':[],
+		'similarity':[]}
+		cont = 0
+		#Try to extrack title from json responses
+		for x in resp:			
+			array = json.loads(x)
+			docs = array["docs"]
+			c = math.ceil(len(docs) * 0.35)
+			while (c != 0):
+				alpha = docs[(c - 1)]
+				title = alpha['title_romaji']
+				episode = alpha['episode']
+				anime_exit['title'].append(title)
+				anime_exit['ep'].append(episode)
+				anime_exit['mal_id'].append(alpha['mal_id'])
+				anime_exit['is_adult'].append(alpha['is_adult'])
+				anime_exit['similarity'].append(alpha['similarity'])
 
+				cont = cont + 1
+				c = c-1
+		sum_si = 0
+		for x in anime_exit['similarity']:
+			sum_si = sum_si + x
+		sum_si = sum_si / len(anime_exit['similarity'])
+		anime_exit['similarity'] = [sum_si]
+		#Where all the info returns
+
+		final = {}
+		#Select info from json files
+		for x in anime_exit:
+			delta = anime_exit[x]
+			p = set([x for x in delta if delta.count(x) > (cont *0.35)])
+
+			#Exceptions
+			if (x == "ep"):
+				p = set([x for x in delta if delta.count(x) > (cont *0.15)])
+			elif (x == "similarity"):
+				sum_si = 0
+				for y in delta:
+					sum_si = sum_si + y
+				sum_si = sum_si / len(anime_exit['similarity'])
+				p = [sum_si]
+			p = list(p)
+			final[str(x)] = p 
+			
+			if (p):
+				print("Probably ",str(x)," ",p)
+			else:
+				print("Not Found. All possible animes: ",delta)
+		return(final)
+	#Remove all temp files
+	def del_temp(self,local):
+		for x in local:
+			print("Deleting: ",x)
+			os.remove(x)
 #https://trace.moe/api/search -d "image=$(base64 -w 0 your_search_image.jpg)"
+# Importing all necessary libraries
+
+
+
+# Read the video from specified path
+ani = anime()
+ani.search('anime.jpg')
