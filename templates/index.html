@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>uWufinder</title>
+	<link rel="stylesheet" type="text/css" href="index.css">
+</head>
+<body>
+	{%if user == True%}
+	<button type="link" href="user_action?action=logout&exit=index">LogOut </button>
+	<div id="welcome">Bem-Vindo {{username}}</div>
+	<div class="info">Email: {{email}}</div>
+	<div class="info">{{first_name}} {{last_name}}</div>
+
+	{% endif %}
+	<form method="POST" action="/search/" enctype="multipart/form-data">
+	<input type="file" name="ani_file" class="anime_field">
+	<br>
+	<button type="submit" class="anime_field">Send</button>
+</form>
+</body>
+</html>

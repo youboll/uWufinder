@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Upload</title>
+	<link rel="stylesheet" type="text/css" href="search.css">
+</head>
+<body>
+	<button type="button" href="/user_action?action=logout?param1">LogOut </button>
+<form method="POST" action="" enctype="multipart/form-data">
+	<input type="file" name="ani_file" class="anime_field">
+	<br>
+	<button type="submit" class="anime_field">Send</button>
+
+	{%if title%}<br>
+	<div class="anime_info">Anime: {{title}}</div><br>
+	<div class="anime_info">Is Adult: {{is_adult}}</div><br>
+	<div class="anime_info">Similarity: {{similarity}}</div><br>
+	<div class="anime_info">Episode: {{ep}}</div><br>
+	<div class="anime_info">MAL id: {{mal_id}}</div><br>
+	{%endif%}
+
+	{%if anime_mal%}<br><br><br>
+	<div>My Anime List INFO</div>
+	<div class="mal_stats">{{anime_mal.title}}</div>
+	<div class="mal_stats">{{anime_mal.episodes}}</div>
+	<div class="mal_stats">{{anime_mal.status}}</div>
+	<div class="mal_stats">{{anime_mal.aired}}</div>
+	<div class="mal_stats">{{anime_mal.genres}}</div>
+	<div class="mal_stats">{{anime_mal.popularity}}</div>
+	<div class="mal_stats">{{anime_mal.url}}</div>
+	<img src="{{anime_mal.image_url}}">
+	{%endif%}
+</form>
+</body>
+</html>
