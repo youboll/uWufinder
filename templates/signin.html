@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>uWufinder - Signin</title>
+</head>
+<body>
+	<form method="POST">
+		{% csrf_token %}
+		{%if error%}
+		<div id="Error">{{cod}}</div>
+		{%endif%}
+		<input type="text" name="username" placeholder="Username or Email">
+		<input type="password" name="password" placeholder="Password">
+		<button type="submit">Login</button>
+		<button href='/signup/'>Signup</button>
+	</form>
+</body>
+</html>

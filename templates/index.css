@@ -1,0 +1,17 @@
+.anime_field{
+	margin-top:5%;
+	width:70%;
+	height:90%;
+	
+}
+button{
+	margin:5px solid transparent;
+	border-radius:25px; 
+}
+form{
+	position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
