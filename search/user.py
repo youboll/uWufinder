@@ -5,6 +5,11 @@ class user:
 
 
 	def show_user(self):
+<<<<<<< HEAD
+		#Try to show user ----
+		#USELESS
+=======
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 		try:
 			tr = us.objects.get(ident = self.ident)
 			print("Valid login!!! username:",tr.username,' Email: ',tr.email)
@@ -13,7 +18,11 @@ class user:
 			print("Not found")
 			return(False)
 
+<<<<<<< HEAD
+	
+=======
 
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 	def login(payload):
 		from search.tests import test
 		import hashlib
@@ -78,16 +87,34 @@ class user:
 				d = datetime.datetime.now()
 				time = datetime.datetime(d.year,d.month,d.day)
 				ex = time + datetime.timedelta(weeks = 5)
+<<<<<<< HEAD
+
+=======
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 				#DB query
 				us = user(username=str(payload['username']),email=str(payload['email']),
 					first_name=str(payload['first_name']),last_name=str(payload['last_name']),
 					password=str(payload['pwd1']),signup_date = time,ex_date = ex)
+<<<<<<< HEAD
+				
 				us.save()
+				#Getting info by username
+				x = user.get_info_username(us.username,'ident')
+				print('user_ID',x)
+				check_email(x)
+
+
+=======
+				us.save()
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 				return([True])				
 			except ValueError as ex:
 				return([False,'Erro Desconhecido'])
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 	#Get user info by id
 	def get_info(i,param = None):
 		from search.models import user as us
@@ -108,6 +135,28 @@ class user:
 		except:
 			return(False)
 
+<<<<<<< HEAD
+	def get_info_username(i,param = None):
+		from search.models import user as us
+		
+		if (param != None):
+			try:
+				tr = us.objects.get(username = str(i))
+				payload = {'username':tr.username,'email':tr.email,'first_name':tr.first_name,
+				'last_name':tr.last_name}
+				return(payload)
+			except:
+				return(False)
+		try:
+
+			tr = us.objects.get(username = str(i))
+			x =  "tr." + param
+			return(eval(x))
+		except:
+			return(False)
+
+=======
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 
 
 	def check_trial(i):
@@ -150,19 +199,90 @@ class user:
 			return(False)
 
 	def check_login(request):
+<<<<<<< HEAD
+		#Check if user is logged
+=======
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 		try:
 			request.session['user_auth']
 			return(True)
 		except:
 			return(False)
 	def logout(request):
+<<<<<<< HEAD
+		#Logout based on the request
+		if user.check_login(request) == False: return(False)
+=======
 		if check_login(request) == False: return(False)
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 		try:
 			del request.session['user_auth']
 			return(True)
 		except:
 			return(False)
 
+<<<<<<< HEAD
+	#Is a controller for the user actions
+	def user_controller(request,exit = True):
+		action = request.GET.get('action','')
+		#Param1 is not required
+
+		param1 = request.GET.get('param1','')
+		exit_site = request.GET.get('exit','')
+
+		if (len(param1) != 0):
+			com ='user.' + str(action) + '(' + str(param1) +  ')'
+		else:
+			com =' user.' + str(action) + '('+')'
+
+		try:
+			c = eval(str(com))
+			payload = {'command':c,'exit_site':exit_site}
+			return(payload)
+		except BaseException as ex:
+			raise ex
+	#Create token for future activation
+	def get_user_auth(id):
+		import hashlib
+		import random
+		from search.models import user_auth
+		import datetime
+		ex  = datetime.datetime.now() + datetime.timedelta(days = 3)
+		#Generates a key form random, Converting a random int into ascii to hash it
+		key = hashlib.sha512(str(random.randint(0,100000)).encode('ASCII')).hexdigest()
+		#Create a token into the token table
+		try:
+			qr = us.objects.get(ident = id)
+			key_db = user_auth(token = key, user_id = int(qr.ident), token_ex = ex)
+			key_db.save()
+			return(key_db)
+		except BaseException as ex:
+			raise ex
+
+	#Unite all the processes to create token and send to email
+	def check_email(i):
+		from search.email import email
+		from search.models import user_auth
+		key = user.get_user_auth(i)
+		y = user.get_info(i,True)
+
+		try:
+			x = email('pedro.ciclobrasil@gmail.com',y['email'],'','')
+			x.get_templates('first',{'user':y['first_name'],'token':key.token})
+			x.send_email()
+		except BaseException as ex:
+			raise ex
+
+	def activate_email(token):
+		from search.models import user_auth
+		try:
+			x = user_auth.objects.get(token = token)
+			y = user.objects.get(ident = x.user_id)
+			y.valid_email = True
+			y.save()
+		except BaseException as ex:
+			raise ex
+=======
 
 	"""
 	#The login processsesing isn't made here
@@ -197,3 +317,4 @@ class check_option():
 				return(payload)
 			except BaseException as ex:
 				raise ex
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6

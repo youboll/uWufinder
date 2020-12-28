@@ -1,0 +1,7 @@
+{
+"msg": ["Bem vindo <user> a uWufinder por favor confime o seu email ",
+		"<a href=\"user_action?action=activate_email&exit=index&param1=<token>\"><button class=\"user_action_button\" >Activate Email</button></a>",
+		"<br>If you cant click on the button \"<a href=\"user_action?action=activate_email&exit=index&param1=<token>\"><a href=\"user_action?action=activate_email&exit=index&param1=<token></a>",
+	],
+"subject": "Confimar Email"
+}

@@ -10,4 +10,15 @@ class user(models.Model):
 	type_acc = models.IntegerField(default= 0)
 	signup_date = models.DateField(default = None,null=False)
 	ex_date = models.DateField(null=True)
+<<<<<<< HEAD
 	valid = models.BooleanField(default = True,null = False)
+	valid_email = models.BooleanField(default = False, null = False)
+	bio = models.TextField(default=str("Descrição do usuario"))
+
+class user_auth(models.Model):
+	token = models.TextField(null = False)
+	user_id = models.IntegerField(null = False)
+	token_ex = models.DateField(null = False)
+=======
+	valid = models.BooleanField(default = True,null = False)
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6

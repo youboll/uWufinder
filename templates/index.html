@@ -5,6 +5,22 @@
 	<link rel="stylesheet" type="text/css" href="index.css">
 </head>
 <body>
+<<<<<<< HEAD
+
+	{%if user == True%}
+	<a  href="user_action?action=logout&exit=index&param1=request">
+	<button>LogOut </button>
+	</a>
+	<div id="welcome">Bem-Vindo {{username}}</div>
+	<div class="info">Email: {{email}}</div>
+	<div class="info">{{first_name}} {{last_name}}</div>
+	{%else%}
+	<a href="signin?param=index">
+		<button>LogIn</button>
+	</a>
+	{% endif %}
+
+=======
 	{%if user == True%}
 	<button type="link" href="user_action?action=logout&exit=index">LogOut </button>
 	<div id="welcome">Bem-Vindo {{username}}</div>
@@ -12,6 +28,7 @@
 	<div class="info">{{first_name}} {{last_name}}</div>
 
 	{% endif %}
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 	<form method="POST" action="/search/" enctype="multipart/form-data">
 	<input type="file" name="ani_file" class="anime_field">
 	<br>

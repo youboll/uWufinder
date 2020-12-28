@@ -24,4 +24,8 @@ urlpatterns = [
     path('signup/',views.signup),
     path('signin/',views.signin),
     path('user_action/',views.user_controller),
+<<<<<<< HEAD
+    path('control_panel',views.control_panel),
+=======
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
 ]

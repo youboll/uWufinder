@@ -203,7 +203,11 @@ class video:
             comp = anime()
             exit = 'uzaki' + str(cont)
             #Put a name different from "write"
+<<<<<<< HEAD
+            pls = comp.search(x,exit,"tralala")
+=======
             pls = comp.search(x,exit,"bla")
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
             cont = cont + 1
             final.append(pls)
 

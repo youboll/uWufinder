@@ -83,6 +83,49 @@ def signup(request):
 
 
 def signin(request):
+<<<<<<< HEAD
+	import search.controllers as controllers
+	#Get destination param
+	dest = request.GET.get('param','')
+	#Getting user info
+	username = request.POST.get('username','')
+	password = request.POST.get('password','')
+	if (len(username) == 0 or len(password) == 0 ):
+		return(render(request,'signin.html',{}))
+	if (len(dest) != 0):
+		x = controllers.login_controller(request)
+		if (x[0] == True):
+			#Index is the only exception to the pattern
+			if (dest == 'index'): dest = ''
+			site = '/' + str(dest)
+			return(redirect(site))
+		else:
+			print(x)
+	else:
+		print(x)
+		return(redirect(index))
+
+def user_controller(request):
+	from search.user import user as us
+	y= None
+	x = us.user_controller(request,'y')
+	if (x['exit_site'] == "index"):
+		redir ='/'
+	else:
+		redir ='/' + x['exit_site']
+	return(redirect(redir))
+
+def control_panel(request):
+	from search.user import user
+	#Check some stuff
+	if (user.check_login(request) == False):
+		return(redirect(index))
+	if (user.check_trial(request.session['user_auth']) == True):
+		return(redirect(index))
+		
+	payload = user.get_info(request.session['user_auth'],param = 0)
+	return(render(request,'control_panel.html',payload))
+=======
 	from search.tests import test 
 	from search.user import user
 	import hashlib 
@@ -109,3 +152,4 @@ def user_controller(request):
 	y = 0
 	x = check_option.user_controller(request,y)
 	return(redirect(x['exit_site']))
+>>>>>>> dea5dc89a68445bff739d48a7eb771a0ba4567e6
