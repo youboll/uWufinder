@@ -1,3 +1,4 @@
+##Nada de util aqui
 import json
 with open('uzaki1.json','r', encoding='utf-8') as j:
 
