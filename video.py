@@ -36,14 +36,19 @@ class video:
 
 #extract info
     def get_info(self):
-        video = cv2.VideoCapture(self.video_name)
-        num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-        frame_rate = cv2.CAP_PROP_FPS
-        video.release()
-        payload = {'num_frames':num_frames}
-        self.num_frames = payload['num_frames']
-        print("Number of frames: ",self.num_frames)
-        return(payload)
+        try:    
+            video = cv2.VideoCapture(self.video_name)
+            num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+            frame_rate = cv2.CAP_PROP_FPS
+            video.release()
+            payload = {'num_frames':num_frames}
+            self.num_frames = payload['num_frames']
+            print("Number of frames: ",self.num_frames)
+            return(payload)
+        except BaseException as ex:
+            print("Video nao encontrado")
+            exit()
+
     def video_capture(self):
         response = []
         names  = []

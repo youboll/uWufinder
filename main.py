@@ -1,6 +1,13 @@
 from source import anime
 from video import video
 from PIL import Image as im 
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('-a','--Anime',help="Anime video")
+args = parser.parse_args()
+
+videoName = args.Anime
+
 def extractor(file,folder,size):
 	vd = video(file,folder)
 	vd.storage()
@@ -9,7 +16,7 @@ def extractor(file,folder,size):
 	res = vd.video_capture()
 
 	return(res)
-uzaki = extractor('testing.mkv','temp',3)
+uzaki = extractor(videoName,'temp',3)
 names = uzaki['local']
 frames = uzaki['frames']
 cont = 0

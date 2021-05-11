@@ -81,5 +81,5 @@ class anime():
 
 
 # Read the video from specified path
-ani = anime()
-ani.search('anime.jpg')
+###ani = anime()
+###ani.search('anime.jpg')
