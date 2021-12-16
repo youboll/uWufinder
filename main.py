@@ -9,7 +9,7 @@ def extractor(file,folder,size):
 	res = vd.video_capture()
 
 	return(res)
-uzaki = extractor('testing.mkv','temp',3)
+uzaki = extractor('testing.mp4','temp',5)
 names = uzaki['local']
 frames = uzaki['frames']
 cont = 0
