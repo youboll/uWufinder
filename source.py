@@ -6,6 +6,7 @@ import PIL
 import math
 from anilistpy import Anime
 class anime():
+	
 
 	def search(self,file,name="Default",tipo="write"):
 		files = {'image': open(str(file),'rb')}
@@ -20,22 +21,46 @@ class anime():
 
 		#print(type(alpha))
 		#print("Nome: ",alpha["title_romaji"]," Semelhanca",alpha["similarity"])
+	#This algo will cut half the responses based on apperance, the rest will be sorted according to the simililarity
 	def composer(self,resp):
+		def getElement(item):
+			return item['similarity']
+		#Entire data
 		finalOutput = []
+		#Anime codes -- For apperance based sorting
+		parcialData=[]
 		for x in resp:
 			responseData = json.loads(x)
 			for y in responseData['result']:
-				finalOutput.append(y['anilist'])
-		anime = sorted(list(set(finalOutput)))[-1]
-		animeData = Anime(anime).json()
-		print("Title ", animeData['data']['Page']['media'][0]['title']['romaji'])
-		print("AniList code: ",anime)
-		print("Full Data: ",finalOutput)
-
+				parcialData.append(y['anilist'])
+				finalOutput.append({"anilistID":y['anilist'],"similarity":y['similarity'],"ep":y['episode']})
+		
+		sortedAnimeList = sorted(list(set(parcialData)))
+		cutedAnimeList = sortedAnimeList[(-1 * math.ceil(len(sortedAnimeList)/2)):-1]
+		cutedAnimeList.append(sortedAnimeList[-1])
+		
+		finalAnimeList = []
+		for x in cutedAnimeList:
+			animeSimilarity = 0.0
+			counter = 0
+			for y in finalOutput:
+				if (y['anilistID'] == x):
+					animeObj = y
+					break
+			for y in finalOutput:
+				if (y['anilistID'] == animeObj['anilistID']):
+					animeSimilarity =+ y['similarity']
+					counter =+ 1
+			finalAnimeList.append({"anilistID": animeObj['anilistID'],'similarity':(animeSimilarity / counter)})
+		finalAnimeList.sort(key=getElement)
+		animeData = Anime(finalAnimeList[-1]['anilistID']).json()
+		print("Anilist code: ",finalAnimeList[-1]['anilistID'])
+		print("Similarity: ",finalAnimeList[-1]['similarity'])
+		print("Anime Title: ",animeData['data']['Page']['media'][0]['title']['romaji'])
+		print("Status: ",animeData['data']['Page']['media'][0]['status'])
 	#Remove all temp files
 	def del_temp(self,local):
 		for x in local:
-			print("Deleting: ",x)
 			os.remove(x)
 #https://trace.moe/api/search -d "image=$(base64 -w 0 your_search_image.jpg)"
 # Importing all necessary libraries

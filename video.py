@@ -54,13 +54,11 @@ class video:
         for x in r:
             cam = cv2.VideoCapture(self.video_name)
             num_frames = int(cam.get(cv2.CAP_PROP_FRAME_COUNT))
-            print("\n Random: ",r)
             x = math.ceil(x)
             cam.set(cv2.CAP_PROP_POS_FRAMES, x)
             name = './'+str(self.storage_dir)+'/frame' + str(x) + '.jpg'
             ret, frame = cam.read()
             names.append(name)
-            print("\n\n Writing frame ",x)
             response.append(frame)
             cv2.imwrite(name, frame)
             cam.release()

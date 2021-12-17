@@ -1,6 +1,12 @@
 from source import anime
 from video import video
 from PIL import Image as im 
+import argparse
+
+parser = argparse.ArgumentParser(description='Find anime from video')
+parser.add_argument('--video', dest='video', help='Video containing the anime')
+args = parser.parse_args()
+
 def extractor(file,folder,size):
 	vd = video(file,folder)
 	vd.storage()
@@ -9,7 +15,7 @@ def extractor(file,folder,size):
 	res = vd.video_capture()
 
 	return(res)
-uzaki = extractor('testing.mp4','temp',5)
+uzaki = extractor(args.video,'temp',3)
 names = uzaki['local']
 frames = uzaki['frames']
 cont = 0
@@ -21,6 +27,6 @@ for x in names:
 	pls = ani.search(x,exit,"write")
 	cont = cont + 1
 	final.append(pls)
-fosasi = ani.composer(final)
-print(fosasi)
+ani.composer(final)
+
 ani.del_temp(names)
