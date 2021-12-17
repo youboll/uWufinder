@@ -4,4 +4,9 @@ https://github.com/soruly/trace.moe
 
 Turns a video into images and make searches on their API
 
--Not sure if the requirements are working, might change it later
+#### USAGE
+```
+pip install -r requirements.txt
+
+python3 main.py --video <Your video>
+```
